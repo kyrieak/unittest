@@ -28,3 +28,17 @@ App.configurePlugin('com.ihealth.plugin.bpmanagercordova', {
 
 > example:
 if you want to scan and connect bp, you need to use BpManagerCordova.search("", success, failure) method.
+
+{"address":"8CDE52143F1E","name":"BP5 143F1E"}
+
+{"address":"8CDE52143F1E","msg":"create bluetoothsocket success"}
+
+{"address":"8CDE52143F1E","msg":"create iostream success"}
+
+{"address":"8CDE52143F1E","msg":"authenticate device"}
+
+zero doing!
+
+zero doned!
+
+{"address":"8CDE52143F1E","pressure":"0"}
