@@ -21,7 +21,10 @@ if (Meteor.isClient) {
         Session.set('counter', message);
       }
       Session.set('counter', "searching...");
-      BpManagerCordova.search("", success, failure);
+      var str = new Array();
+      str[0] = "";
+      str[1] = "test"; 
+      BpManagerCordova.search(str, success, failure, "test");
     },
     
     'click .startmeasure' : function () {
@@ -35,7 +38,10 @@ if (Meteor.isClient) {
         console.log(message);
         Session.set('counter', message);
       }
-      BpManagerCordova.startMeasure("8CDE52143F1E", success, failure);
+      var str = new Array();
+      str[0] = "8CDE52143F1E";
+      str[1] = "test"; 
+      BpManagerCordova.startMeasure(str, success, failure, "test");
     },
     
     'click .stopmeasure' : function () {
@@ -109,7 +115,10 @@ if (Meteor.isClient) {
         console.log(message);
         Session.set('counter', message);
       }
-      BpManagerCordova.getOfflineNum("8CDE52143F1E", success, failure);
+      var str = new Array();
+      str[0] = "8CDE52143F1E";
+      str[1] = "test"; 
+      BpManagerCordova.getOfflineNum(str, success, failure, "test");
 
     },
 
@@ -124,7 +133,10 @@ if (Meteor.isClient) {
         console.log(message);
         Session.set('counter', message);
       }
-      BpManagerCordova.getOfflineData("8CDE52143F1E", success, failure);
+      var str = new Array();
+      str[0] = "8CDE52143F1E";
+      str[1] = "test"; 
+      BpManagerCordova.getOfflineData(str, success, failure, "test");
 
     },
 
