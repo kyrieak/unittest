@@ -20,11 +20,8 @@ if (Meteor.isClient) {
         console.log(message);
         Session.set('counter', message);
       }
-      Session.set('counter', "searching...");
-      var str = new Array();
-      str[0] = "";
-      str[1] = "test"; 
-      BpManagerCordova.search(str, success, failure, "test");
+      Session.set('counter', "searching..."); 
+      BpManagerCordova.search("", success, failure, "test");
     },
     
     'click .startmeasure' : function () {
@@ -38,10 +35,7 @@ if (Meteor.isClient) {
         console.log(message);
         Session.set('counter', message);
       }
-      var str = new Array();
-      str[0] = "8CDE52143F1E";
-      str[1] = "test"; 
-      BpManagerCordova.startMeasure(str, success, failure, "test");
+      BpManagerCordova.startMeasure("8CDE52143F1E", success, failure, "test");
     },
     
     'click .stopmeasure' : function () {
@@ -115,10 +109,7 @@ if (Meteor.isClient) {
         console.log(message);
         Session.set('counter', message);
       }
-      var str = new Array();
-      str[0] = "8CDE52143F1E";
-      str[1] = "test"; 
-      BpManagerCordova.getOfflineNum(str, success, failure, "test");
+      BpManagerCordova.getOfflineNum("8CDE52143F1E", success, failure, "test");
 
     },
 
@@ -132,11 +123,8 @@ if (Meteor.isClient) {
       var failure = function(message){
         console.log(message);
         Session.set('counter', message);
-      }
-      var str = new Array();
-      str[0] = "8CDE52143F1E";
-      str[1] = "test"; 
-      BpManagerCordova.getOfflineData(str, success, failure, "test");
+      } 
+      BpManagerCordova.getOfflineData("8CDE52143F1E", success, failure, "test");
 
     },
 
