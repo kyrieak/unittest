@@ -18,12 +18,9 @@ h4 {
 }
 
 #ut-display {
-  color: red;
-  display: block;
-  width: 100%;
-  min-height: 4em;
+  display: none;
 }
 
-#ut-measures .label {
+.ut-label {
   font-weight: bold;
 }
