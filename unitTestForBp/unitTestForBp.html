@@ -3,42 +3,40 @@
 </head>
 
 <body>
-  <h1>Welcome to UnitTest for bp plugin!</h1>
-
+  <div class="container">
+    <h1>Welcome to UnitTest for bp plugin!</h1>
+  </div>
   <div id="ut-wrapper">
     {{> unittest}}
   </div>
 </body>
 
 <template name="unittest">
-  <div class="container">
+  <div class="container btns-wrapper">
     <div class="row">
+      <!-- Search -->
       <div class="col-md-2 col-xs-6">
         <button class="ut-btn search">Search</button>
       </div>
       <div class="col-md-2 col-xs-6">
         <button class="ut-btn stopsearch">Stop Search</button>
       </div>
-    </div>
 
-    <div class="row">
+      <!-- Measure -->
       <div class="col-md-2 col-xs-6">
         <button class="ut-btn startmeasure">Start Measure</button>
       </div>
       <div class="col-md-2 col-xs-6">
         <button class="ut-btn stopmeasure">Stop Measure</button>
       </div>
-    </div>
-    
-    <div class="row">
+      
+      <!-- Offline -->
       <div class="col-md-2 col-xs-6">
         <button class="ut-btn enableOffline">Enable Offline</button>
       </div>
       <div class="col-md-2 col-xs-6">
         <button class="ut-btn disenableOffline">Disenable Offline</button>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-2 col-xs-6">
         <button class="ut-btn getOfflineNum">Get Offline Num</button>
       </div>
@@ -46,11 +44,11 @@
         <button class="ut-btn getOfflineData">Get Offline Data</button>
       </div>
       <div class="col-md-2 col-xs-6">
-        <button class="ut-btn getBattery">Get Battery</button>
+        <button class="ut-btn isEnableOffline">Offline Setting</button>
       </div>
       <div class="col-md-2 col-xs-6">
-        <button class="ut-btn isEnableOffline">Offline Setting</button>
-      </div>  
+        <button class="ut-btn getBattery">Get Battery</button>
+      </div>
     </div>
   </div>
 
@@ -71,9 +69,9 @@
 
 <template name="deviceInfo">
   {{#if name }}
-    <div>{{ name }}</div>
+    <div>Name: {{ name }}</div>
   {{/if}}
-  <div>{{ address }}</div>
+  <div>Address: {{ address }}</div>
 </template>
 
 <template name="measurements">
