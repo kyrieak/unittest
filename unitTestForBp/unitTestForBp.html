@@ -4,19 +4,54 @@
 
 <body>
   <h1>Welcome to UnitTest for bp plugin!</h1>
-  {{> unittest}}
+
+  <div id="ut-wrapper">
+    {{> unittest}}
+  </div>
 </body>
 
 <template name="unittest">
-  	<button class="search">search</button>
-  	<button class="stopsearch">stopsearch</button>
-  	<button class="startmeasure">startmeasure</button>
-  	<button class="stopmeasure">stopmeasure</button>
-  	<button class="enableOffline">enableOffline</button>
-  	<button class="disenableOffline">disenableOffline</button>
-  	<button class="getOfflineNum">getOfflineNum</button>
-  	<button class="getOfflineData">getOfflineData</button>
-  	<button class="getBattery">getBattery</button>
-  	<button class="isEnableOffline">isEnableOffline</button>
-  	<TextArea>message:{{counter}}</TextArea>
+  <button class="ut-btn search">search</button>
+  <button class="ut-btn stopsearch">stopsearch</button>
+  <button class="ut-btn startmeasure">startmeasure</button>
+  <button class="ut-btn stopmeasure">stopmeasure</button>
+  <button class="ut-btn enableOffline">enableOffline</button>
+  <button class="ut-btn disenableOffline">disenableOffline</button>
+  <button class="ut-btn getOfflineNum">getOfflineNum</button>
+  <button class="ut-btn getOfflineData">getOfflineData</button>
+  <button class="ut-btn getBattery">getBattery</button>
+  <button class="ut-btn isEnableOffline">isEnableOffline</button>
+  
+  <TextArea id="ut-display">message:{{counter}}</TextArea>
+
+  {{#if statusMsg}}
+    <div>{{ statusMsg }}</div>
+  {{/if}}
+
+  {{> Template.dynamic template=testType }}
+
+  {{#if hasDeviceInfo}}
+    <hr>
+    <h4>Device Information</h4>
+    {{> deviceInfo }}
+  {{/if}}
+
+</template>
+
+<template name="deviceInfo">
+  {{#if name }}
+    <div>{{ name }}</div>
+  {{/if}}
+  <div>{{ address }}</div>
+</template>
+
+<template name="measurements">
+  <table id="ut-measures">
+  {{#each measureKeys}}
+    <tr>
+      <td class="label">{{ labelForKey this }}</td>
+      <td>{{ testResultForKey this }}</td>
+    </tr>
+  {{/each}}
+  </table>
 </template>

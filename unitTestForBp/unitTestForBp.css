@@ -1,1 +1,25 @@
 /* CSS declarations go here */
+
+body {
+  padding-right: 5px; /* temporary fix for uneven L-R spacing */
+}
+
+.ut-btn {
+  font-weight: bold;
+  min-width: 9em;
+}
+
+#ut-wrapper {
+  width: 100%;
+}
+
+#ut-display {
+  color: red;
+  display: block;
+  width: 100%;
+  min-height: 4em;
+}
+
+#ut-measures .label {
+  font-weight: bold;
+}

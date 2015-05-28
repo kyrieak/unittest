@@ -4,6 +4,49 @@ if (Meteor.isClient) {
   Template.unittest.helpers({
     counter: function () {
       return Session.get('counter');
+    },
+    testType: function() {
+      return Session.get('testType');
+    },
+    statusMsg: function() {
+      return Session.get('status-msg');
+    },
+    hasDeviceInfo: function() {
+      return (Session.get('device-info') !== undefined);
+    }
+  });
+
+  Template.deviceInfo.helpers({
+    name: function() {
+      return Session.get('device-info')["name"];
+    },
+    address: function() {
+      return Session.get('device-info')["address"];
+    }
+  });
+
+  Template.measurements.helpers({
+    measureKeys: function() {
+      if (Session.get('measurements')) {
+        return Object.getOwnPropertyNames(Session.get('measurements'));
+      } else {
+        return [];
+      }
+    },
+    labelForKey: function(key) {
+      switch(key) {
+        case "highpressure":
+          return "High Pressure";
+        case "lowpressure":
+          return "Low Pressure";
+        case "heartrate":
+          return "Heart Rate";
+        default:
+          return key.charAt(0).toUpperCase() + key.slice(1);
+      }
+    },
+    testResultForKey: function(key) {
+      return Session.get('measurements')[key];
     }
   });
 
@@ -13,6 +56,13 @@ if (Meteor.isClient) {
       console.log('search...');
       var success = function(message){
         console.log(message);
+        var parsedMsg = JSON.parse(message);
+        var info = { "address": parsedMsg["address"],
+                     "name": parsedMsg["name"] };
+
+        Session.set('device-info', info);
+        Session.set('status-msg', parsedMsg["msg"]);
+        Session.set('testType', 'search');
         Session.set('counter', message);
       }
 
@@ -28,6 +78,23 @@ if (Meteor.isClient) {
       console.log('start!');
       var success = function(message){
         console.log(message);
+        var info, measures, status;
+
+        try {
+          var parsedMsg = JSON.parse(message);
+          
+          if (parsedMsg["address"]) {
+            info = { "address": parsedMsg["address"] };
+            delete parsedMsg["address"];
+          }
+          measures = parsedMsg;
+        } catch (e) {
+          status = message;
+        }
+        Session.set('device-info', info);
+        Session.set('status-msg', status);
+        Session.set('measurements', measures);
+        Session.set('testType', 'measurements');
         Session.set('counter', message);
       }
 
