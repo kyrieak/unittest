@@ -2,9 +2,6 @@ if (Meteor.isClient) {
   // counter starts at 0
 
   Template.unittest.helpers({
-    counter: function () {
-      return Session.get('counter');
-    },
     testType: function() {
       return Session.get('testType');
     },
@@ -63,14 +60,13 @@ if (Meteor.isClient) {
         Session.set('device-info', info);
         Session.set('status-msg', parsedMsg["msg"]);
         Session.set('testType', 'search');
-        Session.set('counter', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
-      Session.set('counter', "searching..."); 
+      Session.set('status-msg', "searching..."); 
       BpManagerCordova.search("", success, failure, "test");
     },
     
@@ -95,12 +91,11 @@ if (Meteor.isClient) {
         Session.set('status-msg', status);
         Session.set('measurements', measures);
         Session.set('testType', 'measurements');
-        Session.set('counter', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
       BpManagerCordova.startMeasure("8CDE52143F1E", success, failure, "test");
     },
@@ -109,12 +104,12 @@ if (Meteor.isClient) {
       console.log('stopmeasure!');
       var success = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
       BpManagerCordova.stopMeasure("8CDE52143F1E", success, failure);
 
@@ -124,12 +119,12 @@ if (Meteor.isClient) {
       console.log('stopsearch!');
       var success = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
       BpManagerCordova.stopMeasure("8CDE52143F1E", success, failure);
 
@@ -139,12 +134,12 @@ if (Meteor.isClient) {
       console.log('enableOffline!');
       var success = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
       BpManagerCordova.enableOffline("8CDE52143F1E", success, failure);
 
@@ -154,12 +149,12 @@ if (Meteor.isClient) {
       console.log('disenableOffline!');
       var success = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
       BpManagerCordova.disenableOffline("8CDE52143F1E", success, failure);
 
@@ -169,12 +164,12 @@ if (Meteor.isClient) {
       console.log('getOfflineNum!');
       var success = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
       BpManagerCordova.getOfflineNum("8CDE52143F1E", success, failure, "test");
 
@@ -184,12 +179,12 @@ if (Meteor.isClient) {
       console.log('getOfflineData!');
       var success = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       } 
       BpManagerCordova.getOfflineData("8CDE52143F1E", success, failure, "test");
 
@@ -199,12 +194,12 @@ if (Meteor.isClient) {
       console.log('getBattery!');
       var success = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
       BpManagerCordova.getBattery("8CDE52143F1E", success, failure);
 
@@ -214,12 +209,12 @@ if (Meteor.isClient) {
       console.log('isEnableOffline!');
       var success = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('counter', message);
+        Session.set('status-msg', message);
       }
       BpManagerCordova.isEnableOffline("8CDE52143F1E", success, failure);
 

@@ -4,21 +4,26 @@ body {
   padding-right: 5px; /* temporary fix for uneven L-R spacing */
 }
 
+h1 {
+  font-size: 1.4em;
+}
+
 h4 {
   font-size: 1.2em;
 }
 
 .ut-btn {
   font-weight: bold;
-  min-width: 9em;
+  width: 100%;
+}
+
+#statusMsg {
+  width: 100%;
+  text-align: center;
 }
 
 #ut-wrapper {
   width: 100%;
-}
-
-#ut-display {
-  display: none;
 }
 
 .ut-label {

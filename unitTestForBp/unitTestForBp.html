@@ -11,31 +11,62 @@
 </body>
 
 <template name="unittest">
-  <button class="ut-btn search">search</button>
-  <button class="ut-btn stopsearch">stopsearch</button>
-  <button class="ut-btn startmeasure">startmeasure</button>
-  <button class="ut-btn stopmeasure">stopmeasure</button>
-  <button class="ut-btn enableOffline">enableOffline</button>
-  <button class="ut-btn disenableOffline">disenableOffline</button>
-  <button class="ut-btn getOfflineNum">getOfflineNum</button>
-  <button class="ut-btn getOfflineData">getOfflineData</button>
-  <button class="ut-btn getBattery">getBattery</button>
-  <button class="ut-btn isEnableOffline">isEnableOffline</button>
-  
-  <TextArea id="ut-display">message:{{counter}}</TextArea>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn search">Search</button>
+      </div>
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn stopsearch">Stop Search</button>
+      </div>
+    </div>
 
-  {{#if statusMsg}}
-    <div>{{ statusMsg }}</div>
-  {{/if}}
+    <div class="row">
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn startmeasure">Start Measure</button>
+      </div>
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn stopmeasure">Stop Measure</button>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn enableOffline">Enable Offline</button>
+      </div>
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn disenableOffline">Disenable Offline</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn getOfflineNum">Get Offline Num</button>
+      </div>
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn getOfflineData">Get Offline Data</button>
+      </div>
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn getBattery">Get Battery</button>
+      </div>
+      <div class="col-md-2 col-xs-6">
+        <button class="ut-btn isEnableOffline">Offline Setting</button>
+      </div>  
+    </div>
+  </div>
 
-  {{> Template.dynamic template=testType }}
+  <div class="container">
+    {{#if statusMsg}}
+      <div id="statusMsg">{{ statusMsg }}</div>
+    {{/if}}
 
-  {{#if hasDeviceInfo}}
-    <hr>
-    <h4>Device Information</h4>
-    {{> deviceInfo }}
-  {{/if}}
+    {{> Template.dynamic template=testType }}
 
+    {{#if hasDeviceInfo}}
+      <hr>
+      <h4>Device Information</h4>
+      {{> deviceInfo }}
+    {{/if}}
+  </div>
 </template>
 
 <template name="deviceInfo">
@@ -50,7 +81,7 @@
   {{#each measureKeys}}
     <tr>
       <td class="ut-label">{{ labelForKey this }}</td>
-      <td>{{ testResultForKey this }}</td>
+      <td class="text-right">{{ testResultForKey this }}</td>
     </tr>
   {{/each}}
   </table>
