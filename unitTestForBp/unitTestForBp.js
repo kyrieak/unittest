@@ -1,5 +1,7 @@
 if (Meteor.isClient) {
   // counter starts at 0
+  var bpDisplayScale;
+  var bpMaxDim;
 
   Template.unittest.helpers({
     testType: function() {
@@ -22,7 +24,26 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.measurements.rendered = function() {
+    var bpContainer = $.find("#bp-container");
+    var w = $(bpContainer).width()
+
+    $(bpContainer).height(w);
+
+    bpMaxDim = w;
+    bpDisplayScale = w / 16.737;
+  };
+
+
   Template.measurements.helpers({
+    getCircleAttrs: function(bp) {
+      var d = Math.round(Math.sqrt(bp / Math.PI) * 2 * bpDisplayScale);
+
+      return "width: " + d + "px; height: " + d + "px;";
+    },
+    bpMarkerPos: function(bp) {
+      return bpDisplayScale * bp;
+    },
     measureKeys: function() {
       if (Session.get('measurements')) {
         return Object.getOwnPropertyNames(Session.get('measurements'));
@@ -30,12 +51,21 @@ if (Meteor.isClient) {
         return [];
       }
     },
+    bpMeasure: function() {
+      return Session.get('measurements').pressure;
+    },
+    bpSystolic: function() {
+      return Session.get('measurements').highpressure;
+    },
+    bpDiastolic: function() {
+      return Session.get('measurements').lowpressure;
+    },
     labelForKey: function(key) {
       switch(key) {
         case "highpressure":
-          return "High Pressure";
+          return "Systolic";
         case "lowpressure":
-          return "Low Pressure";
+          return "Diastolic";
         case "heartrate":
           return "Heart Rate";
         default:

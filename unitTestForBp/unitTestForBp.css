@@ -33,3 +33,36 @@ h4 {
 .ut-label {
   font-weight: bold;
 }
+
+
+#bp-container {
+  position: relative;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.bp-guide-s,
+.bp-guide-d {
+  border: 1px solid gray;
+  background-color: transparent;
+}
+
+.bp-guide-s,
+.bp-guide-d,
+.bp-circle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  border-radius: 50%;
+}
+
+.bp-circle {
+  background-color: #89cff0;
+}
+
+#bp-diastolic {
+  background-color: #21abcd;
+}

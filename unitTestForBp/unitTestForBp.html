@@ -12,6 +12,24 @@
 </body>
 
 <template name="unittest">
+  {{> testButtons }}
+
+  <div class="container">
+    {{#if statusMsg}}
+      <div id="statusMsg">{{ statusMsg }}</div>
+    {{/if}}
+
+    {{> Template.dynamic template=testType }}
+
+    {{#if hasDeviceInfo}}
+      <hr>
+      <h4>Device Information</h4>
+      {{> deviceInfo }}
+    {{/if}}
+  </div>
+</template>
+
+<template name="testButtons">
   <div class="container btns-wrapper">
     <div class="row">
       <!-- Search -->
@@ -31,39 +49,25 @@
       </div>
       
       <!-- Offline -->
-      <div class="col-md-2 col-xs-6">
+      <div class="col-md-2 col-xs-6 hidden">
         <button class="ut-btn enableOffline">Enable Offline</button>
       </div>
-      <div class="col-md-2 col-xs-6">
+      <div class="col-md-2 col-xs-6 hidden">
         <button class="ut-btn disenableOffline">Disenable Offline</button>
       </div>
-      <div class="col-md-2 col-xs-6">
+      <div class="col-md-2 col-xs-6 hidden">
         <button class="ut-btn getOfflineNum">Get Offline Num</button>
       </div>
-      <div class="col-md-2 col-xs-6">
+      <div class="col-md-2 col-xs-6 hidden">
         <button class="ut-btn getOfflineData">Get Offline Data</button>
       </div>
-      <div class="col-md-2 col-xs-6">
+      <div class="col-md-2 col-xs-6 hidden">
         <button class="ut-btn isEnableOffline">Offline Setting</button>
       </div>
-      <div class="col-md-2 col-xs-6">
+      <div class="col-md-2 col-xs-6 hidden">
         <button class="ut-btn getBattery">Get Battery</button>
       </div>
     </div>
-  </div>
-
-  <div class="container">
-    {{#if statusMsg}}
-      <div id="statusMsg">{{ statusMsg }}</div>
-    {{/if}}
-
-    {{> Template.dynamic template=testType }}
-
-    {{#if hasDeviceInfo}}
-      <hr>
-      <h4>Device Information</h4>
-      {{> deviceInfo }}
-    {{/if}}
   </div>
 </template>
 
@@ -75,6 +79,35 @@
 </template>
 
 <template name="measurements">
+  <div id="measurements">
+    <div id="bp-container">
+      {{#if measureKeys}}
+        <div class="bp-guide-s" style={{ getCircleAttrs 180 }}></div>
+        <div class="bp-guide-s" style={{ getCircleAttrs 160 }}></div>
+        <div class="bp-guide-s" style={{ getCircleAttrs 140 }}></div>
+        <div class="bp-guide-s" style={{ getCircleAttrs 120 }}></div>
+        <div class="bp-guide-s" style={{ getCircleAttrs 90 }}></div>
+        {{#if bpMeasure}}
+          <div id="bp-measure" class="bp-circle" style={{ getCircleAttrs bpMeasure }}></div>
+        {{/if}}
+
+        {{#if bpSystolic}}
+          <div id="bp-systolic" class="bp-circle" style={{ getCircleAttrs bpSystolic }}></div>
+        {{/if}}
+
+        {{#if bpDiastolic}}
+          <div class="bp-guide-d" style={{ getCircleAttrs 110 }}></div>
+          <div class="bp-guide-d" style={{ getCircleAttrs 100 }}></div>
+          <div class="bp-guide-d" style={{ getCircleAttrs 90 }}></div>
+          <div class="bp-guide-d" style={{ getCircleAttrs 80 }}></div>
+          <div class="bp-guide-d" style={{ getCircleAttrs 60 }}></div>
+          <div id="bp-diastolic" class="bp-circle" style={{ getCircleAttrs bpDiastolic }}></div>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+
+
   <table id="ut-measures">
   {{#each measureKeys}}
     <tr>
