@@ -2,30 +2,16 @@ if (Meteor.isClient) {
   // counter starts at 0
   var bpDisplayScale;
 
+  Template.unittest.rendered = function() {
+    Session.set('testType', 'search');
+  }
+
   Template.unittest.helpers({
     testType: function() {
       return Session.get('testType');
     },
     statusMsg: function() {
       return Session.get('status-msg');
-    },
-    navLabel: function() {
-      var current = Session.get('testType');
-      
-      if (current && (current == "measure")) {
-        return "Search for Device";
-      } else {
-        return "Start Measurements";
-      }
-    },
-    navKey: function() {
-      var current = Session.get('testType');
-      
-      if (current && (current == "measure")) {
-        return "search";
-      } else {
-        return "measure";
-      }
     }
   });
 
@@ -97,7 +83,7 @@ if (Meteor.isClient) {
     arrythmia: function() {
       var a = Session.get('measurements').arrythmia;
       
-      return (a ? "Yes" : "");
+      return (a ? a : "");
     },
     labelForKey: function(key) {
       switch(key) {
@@ -119,7 +105,8 @@ if (Meteor.isClient) {
   Template.unittest.events({
 
     'click .nav-btn' : function () {
-      Session.set('testType', $(this).data("navKey"));
+      var btn = $.find(".nav-btn:visible")[0];
+      Session.set('testType', $(btn).data("navkey"));
       $('.nav-btn').toggleClass('hidden');
     },
     
@@ -127,8 +114,6 @@ if (Meteor.isClient) {
       console.log('search...');
       var success = function(message){
         console.log(message);
-        this.innerHTML = "Stop Search";
-
 
         Session.set('testType', 'search');
         Session.set('measurements', undefined);

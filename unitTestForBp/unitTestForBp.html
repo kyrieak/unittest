@@ -15,11 +15,11 @@
     <div class="container">
       <ul class="nav navbar-nav">
         <li class="text-center">
-          <button class="nav-btn" data-navKey="measure">
+          <button class="nav-btn" data-navkey="measure">
             <span>Start Measurements</span>
             <i class="fa fa-chevron-circle-right"></i>
           </button>
-          <button class="nav-btn hidden" data-navKey="search">
+          <button class="nav-btn hidden" data-navkey="search">
             <i class="fa fa-chevron-circle-left"></i>
             <span>Search for Device</span>
           </button>
@@ -102,28 +102,27 @@
       {{/if}}
     {{/if}}
     </div>
-  </div>
-  
-  <div class="container">
-  {{#if hasReadings}}
-    <table id="ut-measures">
-      <tr>
-        <td class="ut-label">Systolic BP</td>
-        <td class="text-right">{{ bpSystolic }}</td>
-      </tr>
-      <tr>
-        <td class="ut-label">Diastolic BP</td>
-        <td class="text-right">{{ bpDiastolic }}</td>
-      </tr>
-      <tr>
-        <td class="ut-label">Heart Rate</td>
-        <td class="text-right">{{ heartRate }}</td>
-      </tr>
-      <tr>
-        <td class="ut-label">Arrythmia</td>
-        <td class="text-right">{{ arrythmia }}</td>
-      </tr>
+    <table id="ut-measures" class="table table-striped">
+    {{#if hasReadings}}
+      <tbody>
+        <tr>
+          <td class="ut-label">Systolic BP</td>
+          <td class="text-right">{{ bpSystolic }}</td>
+        </tr>
+        <tr>
+          <td class="ut-label">Diastolic BP</td>
+          <td class="text-right">{{ bpDiastolic }}</td>
+        </tr>
+        <tr>
+          <td class="ut-label">Heart Rate</td>
+          <td class="text-right">{{ heartRate }}</td>
+        </tr>
+        <tr>
+          <td class="ut-label">Arrythmia</td>
+          <td class="text-right">{{ arrythmia }}</td>
+        </tr>
+      </tbody>
+    {{/if}}    
     </table>
-  {{/if}}    
   </div>
 </template>
