@@ -13,9 +13,9 @@ if (Meteor.isClient) {
       var current = Session.get('testType');
       
       if (current && (current == "measure")) {
-        return "Back To: Search for Device";
+        return "Search for Device";
       } else {
-        return "Next: Start Measurements";
+        return "Start Measurements";
       }
     },
     navKey: function() {
@@ -67,6 +67,7 @@ if (Meteor.isClient) {
         if (readings.pressure) {
           return readings.pressure;
         } else {
+          Session.set('status-msg', 'Done!');
           return readings.highpressure + "/" + readings.lowpressure;
         }
       } else {
@@ -93,6 +94,11 @@ if (Meteor.isClient) {
 
       return (hr ? hr : "");
     },
+    arrythmia: function() {
+      var a = Session.get('measurements').arrythmia;
+      
+      return (a ? "Yes" : "");
+    },
     labelForKey: function(key) {
       switch(key) {
         case "highpressure":
@@ -114,6 +120,8 @@ if (Meteor.isClient) {
 
     'click .nav-btn' : function () {
       Session.set('testType', $(this).data("navKey"));
+      $('#test-buttons .row').toggleClass('hidden');
+      $('.nav-btn').toggleClass('hidden');
     },
     
     'click .search' : function () {
@@ -121,6 +129,7 @@ if (Meteor.isClient) {
       var success = function(message){
         console.log(message);
         this.innerHTML = "Stop Search";
+
 
         Session.set('testType', 'search');
         Session.set('measurements', undefined);
@@ -147,6 +156,7 @@ if (Meteor.isClient) {
         console.log(message);
 
         Session.set('testType', 'measure');
+        Session.set('status-msg', 'Reading...');
 
         var info, measurements, status;
 

@@ -2,21 +2,46 @@
 
 body {
   padding-right: 5px; /* temporary fix for uneven L-R spacing */
+  background-color: #fff7e0;
+  font-family: "Myriad Pro", Verdana, sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  color: #50404d;
 }
 
 h4 {
   font-size: 1.2em;
 }
 
+
+button {
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+button.nav-btn {
+  border-color: #e6ac00;
+  font-weight: bold;
+  background-color: #ffbf00;
+}
+
 .btns-wrapper {
   margin-bottom: 1em;
 }
 
-.ut-btn {
-  border: 1px solid #e6ac00;
+button:focus,
+button:active {
+  outline: none;
+}
+
+button.ut-btn {
+  border-color: #30a4d7;
   width: 100%;
   font-weight: bold;
-  background-color: #ffbf00;
+  color: white;
+  background-color: #41b5e8;
 }
 
 #statusMsg {
@@ -28,10 +53,14 @@ h4 {
   width: 100%;
 }
 
-.ut-label {
-  font-weight: bold;
+td.ut-label {
+  padding-right: 2em;
 }
 
+#measurements {
+  margin-right: -5px;
+  background-color: white;
+}
 
 #bp-container {
   position: relative;
