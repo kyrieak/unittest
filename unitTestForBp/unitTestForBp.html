@@ -3,25 +3,12 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1>Hello!</h1>
-  </div>
   <div id="ut-wrapper">
     {{> unittest}}
   </div>
 </body>
 
 <template name="unittest">
-  <div class="container">
-    <div id="test-buttons">
-      {{> testButtons }}
-    </div>
-
-    {{#if statusMsg}}
-      <div id="statusMsg">{{ statusMsg }}</div>
-    {{/if}}
-  </div>
-
   {{> Template.dynamic template=testType }}
 
   <nav class="navbar-fixed-bottom">
@@ -42,9 +29,11 @@
   </nav>
 </template>
 
-<template name="testButtons">
-  <div class="btns-wrapper">
-    <!-- Search -->
+
+<template name="search">
+  <div class="container">
+    <h1>Device Connection</h1>
+
     <div class="row">
       <div class="col-xs-6">
         <button class="ut-btn search">Search</button>
@@ -53,20 +42,12 @@
         <button class="ut-btn stopsearch">Stop Search</button>
       </div>
     </div>
-
-    <!-- Measure -->
-    <div class="row hidden">
-      <div class="col-xs-6">
-        <button class="ut-btn startmeasure">Start Measure</button>
-      </div>
-      <div class="col-xs-6">        
-        <button class="ut-btn stopmeasure">Stop Measure</button>
-      </div>
-    </div>
   </div>
-</template>
 
-<template name="search">
+  {{#if statusMsg}}
+    <div id="statusMsg">{{ statusMsg }}</div>
+  {{/if}}
+
   <div class="container">
   {{#if hasDeviceInfo}}
 
@@ -79,7 +60,21 @@
   </div>
 </template>
 
+
 <template name="measure">
+  <div class="container">
+    <h1>Measurements</h1>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <button class="ut-btn startmeasure">Start Measure</button>
+      </div>
+      <div class="col-xs-6">        
+        <button class="ut-btn stopmeasure">Stop Measure</button>
+      </div>
+    </div>
+  </div>
+
   <div id="measurements" class="container-fluid">
     <div id="bp-container">
     {{#if hasReadings}}
@@ -107,7 +102,9 @@
       {{/if}}
     {{/if}}
     </div>
-
+  </div>
+  
+  <div class="container">
   {{#if hasReadings}}
     <table id="ut-measures">
       <tr>
@@ -127,7 +124,6 @@
         <td class="text-right">{{ arrythmia }}</td>
       </tr>
     </table>
-  {{/if}}
-
+  {{/if}}    
   </div>
 </template>

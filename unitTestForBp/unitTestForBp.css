@@ -8,13 +8,11 @@ body {
 
 h1 {
   font-size: 2em;
-  color: #50404d;
 }
 
 h4 {
   font-size: 1.2em;
 }
-
 
 button {
   border: 1px solid;
@@ -27,22 +25,18 @@ button.nav-btn {
   background-color: #ffbf00;
 }
 
-.btns-wrapper {
-  margin-bottom: 1em;
-}
-
 button:focus,
 button:active {
   outline: none;
 }
 
 button.ut-btn {
-  border-color: #30a4d7;
+  border-color: #41b5e8;
   width: 100%;
   font-weight: bold;
-  color: white;
-  background-color: #41b5e8;
+  background-color: #89cff0;
 }
+
 
 #statusMsg {
   width: 100%;
@@ -59,7 +53,7 @@ td.ut-label {
 
 #measurements {
   margin-right: -5px;
-  background-color: white;
+  background-color: #fff;
 }
 
 #bp-container {

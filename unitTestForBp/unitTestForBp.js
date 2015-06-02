@@ -120,7 +120,6 @@ if (Meteor.isClient) {
 
     'click .nav-btn' : function () {
       Session.set('testType', $(this).data("navKey"));
-      $('#test-buttons .row').toggleClass('hidden');
       $('.nav-btn').toggleClass('hidden');
     },
     
