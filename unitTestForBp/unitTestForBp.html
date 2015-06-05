@@ -11,67 +11,96 @@
 <template name="unittest">
   {{> Template.dynamic template=testType }}
 
-  <nav class="navbar-fixed-bottom">
-    <div class="container">
-      <ul class="nav navbar-nav">
-        <li class="text-center">
-          <button class="nav-btn" data-navkey="measure">
-            <span>Start Measurements</span>
-            <i class="fa fa-chevron-circle-right"></i>
+  <nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-2">
+          <button class="nav-home ih-logo">iH</button>
+        </div>
+        <div class="col-xs-8">
+          <button id="lr-switch">
+            <i class="hand-icon hand-icon-l"></i>
+            <span class="fa fa-exchange"></span>
+            <i class="hand-icon hand-icon-r active"></i>
           </button>
-          <button class="nav-btn hidden" data-navkey="search">
-            <i class="fa fa-chevron-circle-left"></i>
-            <span>Search for Device</span>
-          </button>
-        </li>
-      </ul>
+        </div>
+        <div class="col-xs-2"></div>
+      </div>
     </div>
   </nav>
 </template>
 
 
 <template name="search">
-  <div class="container">
-    <h1>Device Connection</h1>
+<div class="container">
+{{#if selectDevice }}
+  <h2>Connected Device</h2>
 
-    <div class="row">
-      <div class="col-xs-6">
-        <button class="ut-btn search">Search</button>
-      </div>
-      <div class="col-xs-6">
-        <button class="ut-btn stopsearch">Stop Search</button>
-      </div>
-    </div>
+  <div>
+    <span>{{ deviceName selectDevice }}</span>
+    <button class="ut-btn pull-right nav-measure">
+      <span>Use this Device</span>
+      <i class="fa fa-arrow-circle-right"></i>
+    </button>
+  </div>
+{{/if}}
+
+{{#if statusMsg}}
+  <p id="statusMsg">{{ statusMsg }}</p>
+{{/if}}
+</div>
+
+{{#if hasFoundDevice}}
+  <div class="container">
+  {{#if selectDevice}}
+    <h2>Devices Found</h2>
+  {{else}}
+    <h2>Step 1: Select a Device</h2>
+  {{/if}}
   </div>
 
-  {{#if statusMsg}}
-    <div id="statusMsg">{{ statusMsg }}</div>
-  {{/if}}
+  <div id="device-list" class="container-fluid">
+    <table>
+      <tbody>
+      {{#each devices}}
+        <tr class="device-option">
+          <td>
+            <span class="glyphicon glyphicon-modal-window"></span>
+            <span>{{ deviceName this }}</span>
+            <span class="small pull-right">{{ this.address }}</span>
+          </td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{/if}}
 
-  <div class="container">
-  {{#if hasDeviceInfo}}
+  <div class="container">    
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="ut-btn pull-right {{ uiSearchClass }}">{{ uiSearchLabel }}</button>
+      </div>
+    </div>
+    {{#if lastMeasure}}
+      <h3>Last Check-In</h3>
 
-    <h4>Device Information</h4>
-    {{#if name }}
-      <div>Name: {{ name }}</div>
+      <div class="row">
+        <div class="col-xs-12">
+          <span>{{ lastMeasure.result }}</span>
+          <span class="pull-right">{{ lastMeasure.date}}</span>
+        </div>
+      </div>
     {{/if}}
-    <div>Address: {{ address }}</div>
-  {{/if}}
   </div>
 </template>
 
-
 <template name="measure">
   <div class="container">
-    <h1>Measurements</h1>
+    <h2>When You're Ready, Press Start</h2>
 
     <div class="row">
-      <div class="col-xs-6">
-        <button class="ut-btn startmeasure">Start Measure</button>
-      </div>
-      <div class="col-xs-6">        
-        <button class="ut-btn stopmeasure">Stop Measure</button>
-      </div>
+      <button class="ut-btn pull-right {{ uiMeasureClass }}">{{ uiMeasureLabel }}</button>
     </div>
   </div>
 

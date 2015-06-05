@@ -1,29 +1,36 @@
 /* CSS declarations go here */
+/* brand color: #F47320 */
 
 body {
-  padding-right: 5px; /* temporary fix for uneven L-R spacing */
-  background-color: #fff7e0;
+  background-color: #fffcfb;
   font-family: "Myriad Pro", Verdana, sans-serif;
 }
 
+h1, h2, h3 {
+  color: #333;
+}
+
 h1 {
-  margin-top: 0.5em;
   font-size: 2em;
 }
 
-h4 {
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
   font-size: 1.2em;
 }
 
 button {
   border: 1px solid;
-  border-radius: 4px;
-}
-
-button.nav-btn {
-  border-color: #e6ac00;
-  font-weight: bold;
-  background-color: #ffbf00;
+  border-radius: 12px;
+/*  border-radius: 4px;*/
+/*  border-color: #41b5e8;
+  background-color: #89cff0;*/
+  font-size: 1.2em;
+  background-color: #fbceb0;
+  border-color: #f7a167;
 }
 
 button:focus,
@@ -31,26 +38,89 @@ button:active {
   outline: none;
 }
 
-button.ut-btn {
-  border-color: #41b5e8;
+
+#device-list {
+  border: 5px solid #f0d98c;
+  border-width: 5px 0;
+  padding: 0;
   width: 100%;
-  font-weight: bold;
-  background-color: #89cff0;
+  max-height: 12em;
+  overflow-y: scroll;
 }
 
-table {
+#device-list table {
+  margin: 0;
   width: 100%;
-  background-color: #fff;
-  border-bottom: 1px solid #ccc;
+  background-color: #faffff;  
 }
 
-table.table-striped {
-  margin-bottom: 0 !important;
+tr:nth-child(even) {
+/*  background-color: #c9eaf8;*/
+  background-color: #e0f3fb
 }
 
 td {
-  padding: 0.2em 1em !important;
-  line-height: 1.1em !important;
+  border: none !important;
+  padding: 0.4em;
+}
+
+nav {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+/*  background-color: #b6e1f6;*/
+  background-color: #fcddc8;
+}
+
+nav .container-fluid {
+  padding: 0 !important;
+}
+
+button.ih-logo {
+  width: 2em;
+  height: 2em;
+  color: white;
+  border-color: #f7a167;
+/*  border-color: #e6ac00;*/
+  background-color: #F47320;
+}
+
+button#lr-switch {
+  display: block;
+  margin: 0 auto;
+  outline: none;
+  border-radius: 12px;
+  font-size: 1.25em;
+  color: white;
+  background-color: #fbceb0;
+  border-color: #f7a167;
+/*  background-color: #89cff0;*/
+}
+
+i.hand-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  max-height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+i.hand-icon-l {
+  background-image: url('/hand-l-100-lite.png');
+}
+
+i.hand-icon-r {
+  background-image: url('/hand-r-100-lite.png');
+}
+
+i.hand-icon-l.active {
+  background-image: url("/hand-l-100-dark.png");
+}
+
+i.hand-icon-r.active {
+  background-image: url("/hand-r-100-dark.png");
 }
 
 #ut-wrapper {
