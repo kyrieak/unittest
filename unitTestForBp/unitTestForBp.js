@@ -25,6 +25,9 @@ if (Meteor.isClient) {
   });
 
   Template.search.helpers({
+    lrClass: function() {
+      return ((Session.get('lr-mode') === 'L') ? '': 'pull-right');
+    },
     lastMeasure: function() {
       var measure = Session.get('last-measure');
       
@@ -86,6 +89,9 @@ if (Meteor.isClient) {
   };
 
   Template.measure.helpers({
+    lrClass: function(lr) {
+      return ((lr === 'L') ? '' : 'pull-right');
+    },
     uiMeasureClass: function() {
       var _status = Session.get('status');
 
@@ -172,7 +178,6 @@ if (Meteor.isClient) {
 
   Template.unittest.events({
     'click .nav-home' : function() {
-      console.log('nav-ing home');
       Session.set('measurements', undefined);
       Session.set('status-msg', undefined);
       Session.set('status', 'ready');
@@ -184,17 +189,21 @@ if (Meteor.isClient) {
 
       $('.hand-icon').toggleClass('active');
 
-      if (Session.get('lr-mode') === 'L') {
-        $('.ut-btn').removeClass('pull-left');
-        $('.ut-btn').addClass('pull-right');
+      var isLeft = Session.get('lr-mode') === 'L';
+      var fadeOut = (isLeft ? 'fade left' : 'fade right');
+      var fadeIn  = (isLeft ? 'fade right' : 'fade left');
 
-        Session.set('lr-mode', 'R');
-      } else {
-        $('.ut-btn').removeClass('pull-right');
-        $('.ut-btn').addClass('pull-left');        
+      $('.ut-btn').transition(fadeOut, 100, function() {
+        if (isLeft) {
+          $(this).addClass('pull-right');
+          Session.set('lr-mode', 'R');
+        } else {
+          $(this).removeClass('pull-right');
+          Session.set('lr-mode', 'L');
+        }
+      }).transition('fade', 100);
 
-        Session.set('lr-mode', 'L');
-      }
+      $('.nav-home').transition('fade', 200);
     },    
 
     'click .nav-measure' : function() {

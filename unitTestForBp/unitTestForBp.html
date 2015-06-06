@@ -15,7 +15,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-2">
-          <button class="nav-home ih-logo">iH</button>
+          <button class="nav-home ih-logo hidden">iH</button>
         </div>
         <div class="col-xs-8">
           <button id="lr-switch">
@@ -24,7 +24,9 @@
             <i class="hand-icon hand-icon-r active"></i>
           </button>
         </div>
-        <div class="col-xs-2"></div>
+        <div class="col-xs-2">
+          <button class="nav-home ih-logo">iH</button>          
+        </div>
       </div>
     </div>
   </nav>
@@ -38,7 +40,7 @@
 
   <div>
     <span>{{ deviceName selectDevice }}</span>
-    <button class="ut-btn pull-right nav-measure">
+    <button class="ut-btn {{ lrClass }} nav-measure">
       <span>Use this Device</span>
       <i class="fa fa-arrow-circle-right"></i>
     </button>
@@ -79,7 +81,9 @@
   <div class="container">    
     <div class="row">
       <div class="col-xs-12">
-        <button class="ut-btn pull-right {{ uiSearchClass }}">{{ uiSearchLabel }}</button>
+        <button class="ut-btn {{ lrClass lrMode }} {{ uiSearchClass }}">
+          <span>{{ uiSearchLabel }}</span>
+        </button>
       </div>
     </div>
     {{#if lastMeasure}}
@@ -100,7 +104,9 @@
     <h2>When You're Ready, Press Start</h2>
 
     <div class="row">
-      <button class="ut-btn pull-right {{ uiMeasureClass }}">{{ uiMeasureLabel }}</button>
+      <button class="ut-btn {{ lrClass lrMode }} {{ uiMeasureClass }}">
+        <span>{{ uiMeasureLabel }}</span>
+      </button>
     </div>
   </div>
 

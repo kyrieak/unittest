@@ -25,9 +25,6 @@ h3 {
 button {
   border: 1px solid;
   border-radius: 12px;
-/*  border-radius: 4px;*/
-/*  border-color: #41b5e8;
-  background-color: #89cff0;*/
   font-size: 1.2em;
   background-color: #fbceb0;
   border-color: #f7a167;
@@ -38,6 +35,10 @@ button:active {
   outline: none;
 }
 
+
+.ut-btn i {
+  color: #f7a167;
+}
 
 #device-list {
   border: 5px solid #f0d98c;
