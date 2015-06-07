@@ -199,12 +199,28 @@ if (Meteor.isClient) {
     'click #lr-switch' : function() {
       $('.hand-icon').toggleClass('active');
 
-      if (Session.get('lr-mode') === 'L') {
-        Session.set('lr-mode', 'R');
-      } else {
-        Session.set('lr-mode', 'L');
-      }
-      $('.ih-logo').toggleClass('hidden');
+      var isLeft = (Session.get('lr-mode') === 'L');
+      var marginLR = (isLeft ? 'margin-left' : 'margin-right');
+
+      $('.ut-btn').fadeTo(200, 0);
+
+      $('#ih-logo').toggle(200, function() {
+        if (isLeft) {
+          $(this).css('right', 0);
+        } else {
+          $(this).css('right', 'auto');
+        }
+        $(this).toggle(200);
+      });
+      
+      $('.ut-btn').promise().done(function() {
+        if (isLeft) {
+          Session.set('lr-mode', 'R');
+        } else {
+          Session.set('lr-mode', 'L');
+        }
+        $('.ut-btn').fadeTo(200, 1);
+      });
     }
   });
 

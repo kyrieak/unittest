@@ -76,6 +76,7 @@ nav {
   left: 0;
   bottom: 0;
   padding-top: 4px;
+  min-height: 2.8em;
   width: 100%;
   background-color: #fcddc8;
 }
@@ -84,7 +85,9 @@ nav .container-fluid {
   padding: 0 !important;
 }
 
-button.ih-logo {
+button#ih-logo {
+  position: absolute;
+  right: 0;
   width: 2em;
   height: 2em;
   color: white;
