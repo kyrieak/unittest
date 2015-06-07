@@ -92,8 +92,8 @@ if (Meteor.isClient) {
   };
 
   Template.measure.helpers({
-    lrClass: function(lr) {
-      return ((lr === 'L') ? '' : 'pull-right');
+    lrClass: function() {
+      return ((Session.get('lr-mode') === 'L') ? '': 'pull-right');
     },
     uiMeasureClass: function() {
       var _status = Session.get('status');
@@ -157,8 +157,9 @@ if (Meteor.isClient) {
 
       return (hr ? hr : "");
     },
-    arrythmia: function() {
-      var a = Session.get('measurements').arrythmia;
+    arrhythmia: function() {
+      var a = Session.get('measurements').arrhythmia;
+      console.log(a);
       
       return (a ? a : "");
     },

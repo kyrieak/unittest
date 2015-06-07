@@ -97,7 +97,7 @@
     <div class="container">    
       <div class="row">
         <div class="col-xs-12">
-          <button class="ut-btn {{ lrClass lrMode }} {{ uiSearchClass }}">
+          <button class="ut-btn {{ lrClass }} {{ uiSearchClass }}">
             <span>{{ uiSearchLabel }}</span>
           </button>
         </div>
@@ -111,9 +111,11 @@
     <h2>When You're Ready, Press Start</h2>
 
     <div class="row">
-      <button class="ut-btn {{ lrClass lrMode }} {{ uiMeasureClass }}">
-        <span>{{ uiMeasureLabel }}</span>
-      </button>
+      <div class="col-xs-12">
+        <button class="ut-btn {{ lrClass }} {{ uiMeasureClass }}">
+          <span>{{ uiMeasureLabel }}</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -160,8 +162,8 @@
           <td class="text-right">{{ heartRate }}</td>
         </tr>
         <tr>
-          <td class="ut-label">Arrythmia</td>
-          <td class="text-right">{{ arrythmia }}</td>
+          <td class="ut-label">Arrhythmia</td>
+          <td class="text-right">{{ arrhythmia }}</td>
         </tr>
       </tbody>
     {{/if}}    
