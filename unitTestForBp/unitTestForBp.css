@@ -81,8 +81,10 @@ nav {
   background-color: #fcddc8;
 }
 
-nav .container-fluid {
-  padding: 0 !important;
+nav .container {
+  /* padding temp fix works for mobile only */
+  padding-left: 0.25em !important;
+  padding-right: 1.5em !important;
 }
 
 button#ih-logo {
