@@ -3,91 +3,42 @@
 </head>
 
 <body>
-  <div id="ut-wrapper">
-    {{> unittest}}
-  </div>
+  <main role="main">
+    <div id="ut-wrapper">
+      {{> Template.dynamic template=pageContent }}
+    </div>
+  </main>
+
+  <nav>{{> nav}}</nav>  
 </body>
 
-<template name="unittest">
-  {{> Template.dynamic template=testType }}
-
-  <nav>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-2">
-          <button class="nav-home ih-logo hidden">iH</button>
-        </div>
-        <div class="col-xs-8">
-          <button id="lr-switch">
-            <i class="hand-icon hand-icon-l"></i>
-            <span class="fa fa-exchange"></span>
-            <i class="hand-icon hand-icon-r active"></i>
-          </button>
-        </div>
-        <div class="col-xs-2">
-          <button class="nav-home ih-logo">iH</button>          
-        </div>
-      </div>
-    </div>
-  </nav>
-</template>
-
-
-<template name="search">
-<div class="container">
-{{#if selectDevice }}
-  <h2>Connected Device</h2>
-
-  <div>
-    <span>{{ deviceName selectDevice }}</span>
-    <button class="ut-btn {{ lrClass }} nav-measure">
-      <span>Use this Device</span>
-      <i class="fa fa-arrow-circle-right"></i>
-    </button>
-  </div>
-{{/if}}
-
-{{#if statusMsg}}
-  <p id="statusMsg">{{ statusMsg }}</p>
-{{/if}}
-</div>
-
-{{#if hasFoundDevice}}
-  <div class="container">
-  {{#if selectDevice}}
-    <h2>Devices Found</h2>
-  {{else}}
-    <h2>Step 1: Select a Device</h2>
-  {{/if}}
-  </div>
-
-  <div id="device-list" class="container-fluid">
-    <table>
-      <tbody>
-      {{#each devices}}
-        <tr class="device-option">
-          <td>
-            <span class="glyphicon glyphicon-modal-window"></span>
-            <span>{{ deviceName this }}</span>
-            <span class="small pull-right">{{ this.address }}</span>
-          </td>
-        </tr>
-      {{/each}}
-      </tbody>
-    </table>
-  </div>
-{{/if}}
-
-  <div class="container">    
+<template name="nav">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-12">
-        <button class="ut-btn {{ lrClass lrMode }} {{ uiSearchClass }}">
-          <span>{{ uiSearchLabel }}</span>
+      <div class="col-xs-2">
+        <button class="nav-home ih-logo hidden">iH</button>
+      </div>
+      <div class="col-xs-8">
+        <button id="lr-switch">
+          <i class="hand-icon hand-icon-l"></i>
+          <span class="fa fa-exchange"></span>
+          <i class="hand-icon hand-icon-r active"></i>
         </button>
       </div>
+      <div class="col-xs-2">
+        <button class="nav-home ih-logo">iH</button>          
+      </div>
     </div>
+  </div>  
+</template>
+
+<template name="home">
+  {{> search }}
+
+  <div class="container">
+    <section>
     {{#if lastMeasure}}
-      <h3>Last Check-In</h3>
+      <h2>Last Check-In</h2>
 
       <div class="row">
         <div class="col-xs-12">
@@ -96,7 +47,68 @@
         </div>
       </div>
     {{/if}}
+    </section>
   </div>
+</template>
+
+
+<template name="search">
+  <section>
+    <h2 class="sr-only">Connecting Your Device</h2>
+    <div class="container">
+    {{#if selectDevice }}
+      <h3>Connected Device</h3>
+
+      <div>
+        <span>{{ deviceName selectDevice }}</span>
+        <button class="ut-btn {{ lrClass }} nav-measure">
+          <span>Use this Device</span>
+          <i class="fa fa-arrow-circle-right"></i>
+        </button>
+      </div>
+    {{/if}}
+
+    {{#if statusMsg}}
+      <p id="statusMsg">{{ statusMsg }}</p>
+    {{/if}}
+    </div>
+
+  {{#if hasFoundDevice}}
+    <div class="container">
+    {{#if selectDevice}}
+      <h3>Devices Found</h3>
+    {{else}}
+      <h3>Step 1: Select a Device</h3>
+    {{/if}}
+    </div>
+
+    <div id="device-list" class="container-fluid">
+      <table>
+        <tbody>
+        {{#each devices}}
+          <tr class="device-option">
+            <td>
+              <span class="glyphicon glyphicon-modal-window"></span>
+              <span>{{ deviceName this }}</span>
+              <span class="small pull-right">{{ this.address }}</span>
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+
+    <div class="container">    
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="ut-btn {{ lrClass lrMode }} {{ uiSearchClass }}">
+            <span>{{ uiSearchLabel }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <template name="measure">

@@ -9,25 +9,19 @@ if (Meteor.isClient) {
 
   var devices = [];
 
-  Template.unittest.rendered = function() {
+  Template.body.rendered = function() {
     Session.set('status', status.ready);
-    Session.set('testType', 'search');
+    Session.set('pageContent', 'home');
     Session.set('lr-mode', 'R');
   }
 
-  Template.unittest.helpers({
-    testType: function() {
-      return Session.get('testType');
-    },
-    statusMsg: function() {
-      return Session.get('status-msg');
+  Template.body.helpers({
+    pageContent: function() {
+      return Session.get('pageContent');
     }
   });
 
-  Template.search.helpers({
-    lrClass: function() {
-      return ((Session.get('lr-mode') === 'L') ? '': 'pull-right');
-    },
+  Template.home.helpers({
     lastMeasure: function() {
       var measure = Session.get('last-measure');
       
@@ -39,6 +33,15 @@ if (Meteor.isClient) {
       }
 
       return measure;
+    }
+  });
+
+  Template.search.helpers({
+    statusMsg: function() {
+      return Session.get('status-msg');
+    },
+    lrClass: function() {
+      return ((Session.get('lr-mode') === 'L') ? '': 'pull-right');
     },
     selectDevice: function() {
       return Session.get('select-device');
@@ -176,54 +179,47 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.unittest.events({
+  Template.body.events({
     'click .nav-home' : function() {
       Session.set('measurements', undefined);
       Session.set('status-msg', undefined);
       Session.set('status', 'ready');
-      Session.set('testType', 'search');
+      Session.set('pageContent', 'home');
     },
-
-    'click #lr-switch' : function() {
-      console.log('L-R switched');
-
-      $('.hand-icon').toggleClass('active');
-
-      var isLeft = Session.get('lr-mode') === 'L';
-      var fadeOut = (isLeft ? 'fade left' : 'fade right');
-      var fadeIn  = (isLeft ? 'fade right' : 'fade left');
-
-      $('.ut-btn').transition(fadeOut, 100, function() {
-        if (isLeft) {
-          $(this).addClass('pull-right');
-          Session.set('lr-mode', 'R');
-        } else {
-          $(this).removeClass('pull-right');
-          Session.set('lr-mode', 'L');
-        }
-      }).transition('fade', 100);
-
-      $('.nav-home').transition('fade', 200);
-    },    
 
     'click .nav-measure' : function() {
       Session.set('measurements', undefined);
       Session.set('status-msg', undefined);
       Session.set('status', 'ready');
-      Session.set('testType', 'measure');
-    },
+      Session.set('pageContent', 'measure');
+    }
+  });
 
+  Template.nav.events({
+    'click #lr-switch' : function() {
+      $('.hand-icon').toggleClass('active');
+
+      if (Session.get('lr-mode') === 'L') {
+        Session.set('lr-mode', 'R');
+      } else {
+        Session.set('lr-mode', 'L');
+      }
+      $('.ih-logo').toggleClass('hidden');
+    }
+  });
+
+  Template.search.events({
     'click .device-option' : function() {
       console.log(this);
       Session.set('select-device', this);
-    },    
+    },
     
     'click .search' : function () {
       console.log('search...');
       var success = function(message){
         console.log(message);
 
-        Session.set('testType', 'search');
+        Session.set('pageContent', 'home');
 
         var parsedMsg = JSON.parse(message);
         var info = { 'address': parsedMsg['address'],
@@ -243,10 +239,31 @@ if (Meteor.isClient) {
       Session.set('status', status.searching);
       BpManagerCordova.search("", success, failure, "test");
     },
-    
+
+    'click .stopsearch' : function () {
+      console.log('stopsearch!');
+
+      var success = function(message){
+        console.log(message);
+
+        Session.set('pageContent', 'home');
+        Session.set('status-msg', message);
+        Session.set('status', status.ready);
+      }
+
+      var failure = function(message){
+        console.log(message);
+        Session.set('status-msg', message);
+      }
+      BpManagerCordova.stopMeasure("8CDE52143F1E", success, failure);
+
+    }
+  });
+
+  Template.measure.events({    
     'click .startmeasure' : function () {
       console.log('start!');
-      Session.set('testType', 'measure');
+      Session.set('pageContent', 'measure');
       Session.set('status-msg', null);
       Session.set('status', status.measuring);
 
@@ -295,7 +312,7 @@ if (Meteor.isClient) {
       var success = function(message){
         console.log(message);
 
-        Session.set('testType', 'measure');
+        Session.set('pageContent', 'measure');
         Session.set('status-msg', message);
         Session.set('status', status.ready);
       }
@@ -303,25 +320,6 @@ if (Meteor.isClient) {
       var failure = function(message){
         console.log(message);
 
-        Session.set('status-msg', message);
-      }
-      BpManagerCordova.stopMeasure("8CDE52143F1E", success, failure);
-
-    },
-
-    'click .stopsearch' : function () {
-      console.log('stopsearch!');
-
-      var success = function(message){
-        console.log(message);
-
-        Session.set('testType', 'search');
-        Session.set('status-msg', message);
-        Session.set('status', status.ready);
-      }
-
-      var failure = function(message){
-        console.log(message);
         Session.set('status-msg', message);
       }
       BpManagerCordova.stopMeasure("8CDE52143F1E", success, failure);

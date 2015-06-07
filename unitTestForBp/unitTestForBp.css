@@ -35,6 +35,13 @@ button:active {
   outline: none;
 }
 
+.lr-wrapper {
+  min-height: 2em;
+}
+
+.ut-btn.transition {
+  display: auto !important;
+}
 
 .ut-btn i {
   color: #f7a167;
@@ -56,7 +63,6 @@ button:active {
 }
 
 tr:nth-child(even) {
-/*  background-color: #c9eaf8;*/
   background-color: #e0f3fb
 }
 
@@ -69,8 +75,8 @@ nav {
   position: fixed;
   left: 0;
   bottom: 0;
+  padding-top: 4px;
   width: 100%;
-/*  background-color: #b6e1f6;*/
   background-color: #fcddc8;
 }
 
@@ -83,7 +89,6 @@ button.ih-logo {
   height: 2em;
   color: white;
   border-color: #f7a167;
-/*  border-color: #e6ac00;*/
   background-color: #F47320;
 }
 
