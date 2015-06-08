@@ -6,26 +6,30 @@
   <main role="main">
     <div id="ut-wrapper">
       {{> Template.dynamic template=pageContent }}
+      {{> medLingo }}
     </div>
   </main>
 
-  <nav>{{> nav}}</nav>  
+  {{> nav}}
 </body>
 
 <template name="nav">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <button id="ih-logo" class="nav-home">iH</button>
-        <button id="lr-switch">
-          <i class="hand-icon hand-icon-l"></i>
-          <span class="fa fa-exchange"></span>
-          <i class="hand-icon hand-icon-r active"></i>
-        </button>
+  <nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <button id="ih-logo" class="nav-home">iH</button>
+          <button id="lr-switch">
+            <i class="hand-icon hand-icon-l"></i>
+            <span class="fa fa-exchange"></span>
+            <i class="hand-icon hand-icon-r active"></i>
+          </button>
+        </div>
       </div>
-    </div>
-  </div>  
+    </div>  
+  </nav>
 </template>
+
 
 <template name="home">
   {{> search }}
@@ -55,7 +59,7 @@
       <h3>Connected Device</h3>
 
       <div>
-        <span>{{ deviceName selectDevice }}</span>
+        <span class="dv-name">{{ deviceName selectDevice }}</span>
         <button class="ut-btn {{ lrClass }} nav-measure">
           <span>Use this Device</span>
           <i class="fa fa-arrow-circle-right"></i>
@@ -106,67 +110,134 @@
   </section>
 </template>
 
-<template name="measure">
-  <div class="container">
-    <h2>When You're Ready, Press Start</h2>
 
-    <div class="row">
-      <div class="col-xs-12">
-        <button class="ut-btn {{ lrClass }} {{ uiMeasureClass }}">
-          <span>{{ uiMeasureLabel }}</span>
-        </button>
+<template name="measure">
+  <section>
+    <h2 class="sr-only">Taking Your BP Measurements</h2>
+    <div class="container">
+      {{# if measureInProgress }}
+        <h3>Measuring Now</h3>
+      {{else}}
+        <h3>When You're Ready, Press Start</h3>
+      {{/if}}
+
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="ut-btn {{ lrClass }} {{ uiMeasureClass }}">
+            <span>{{ uiMeasureLabel }}</span>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="measurements" class="container-fluid">
-    <div id="bp-container">
-    {{#if hasReadings}}
-      <span id="bpNumDisplay">{{ bpNumDisplay }}</span>
-      <div class="bp-guide-s hide" style={{ getCircleAttrs 180 }}></div>
-      <div class="bp-guide-s hide" style={{ getCircleAttrs 160 }}></div>
-      <div class="bp-guide-s hide" style={{ getCircleAttrs 140 }}></div>
-      <div class="bp-guide-s hide" style={{ getCircleAttrs 120 }}></div>
-      <div class="bp-guide-s hide" style={{ getCircleAttrs 90 }}></div>
-      {{#if bpMeasure}}
-        <div id="bp-measure" class="bp-circle" style={{ getCircleAttrs bpMeasure }}></div>
-      {{/if}}
+    <h3 class="sr-only">BP Measures (Graphical Display)</h3>
 
-      {{#if bpSystolic}}
-        <div id="bp-systolic" class="bp-circle" style={{ getCircleAttrs bpSystolic }}></div>
-      {{/if}}
+    <div id="measurements" class="container-fluid">
+      <div id="bp-container">
+      {{#if hasReadings}}
+        <span id="bpNumDisplay">{{ bpNumDisplay }}</span>
+        <div class="bp-guide-s hide" style={{ getCircleAttrs 180 }}></div>
+        <div class="bp-guide-s hide" style={{ getCircleAttrs 160 }}></div>
+        <div class="bp-guide-s hide" style={{ getCircleAttrs 140 }}></div>
+        <div class="bp-guide-s hide" style={{ getCircleAttrs 120 }}></div>
+        <div class="bp-guide-s hide" style={{ getCircleAttrs 90 }}></div>
+        
+        {{#if bpMeasure}}
+          <div id="bp-measure" class="bp-circle" style={{ getCircleAttrs bpMeasure }}></div>
+        {{/if}}
 
-      {{#if bpDiastolic}}
-        <div class="bp-guide-d hide" style={{ getCircleAttrs 110 }}></div>
-        <div class="bp-guide-d hide" style={{ getCircleAttrs 100 }}></div>
-        <div class="bp-guide-d hide" style={{ getCircleAttrs 90 }}></div>
-        <div class="bp-guide-d hide" style={{ getCircleAttrs 80 }}></div>
-        <div class="bp-guide-d hide" style={{ getCircleAttrs 60 }}></div>
-        <div id="bp-diastolic" class="bp-circle" style={{ getCircleAttrs bpDiastolic }}></div>
+        {{#if bpSystolic}}
+          <div id="bp-systolic" class="bp-circle" style={{ getCircleAttrs bpSystolic }}></div>
+        {{/if}}
+
+        {{#if bpDiastolic}}
+          <div class="bp-guide-d hide" style={{ getCircleAttrs 110 }}></div>
+          <div class="bp-guide-d hide" style={{ getCircleAttrs 100 }}></div>
+          <div class="bp-guide-d hide" style={{ getCircleAttrs 90 }}></div>
+          <div class="bp-guide-d hide" style={{ getCircleAttrs 80 }}></div>
+          <div class="bp-guide-d hide" style={{ getCircleAttrs 60 }}></div>
+          <div id="bp-diastolic" class="bp-circle" style={{ getCircleAttrs bpDiastolic }}></div>
+        {{/if}}
       {{/if}}
-    {{/if}}
+      </div>
+      
+      <h3 class="sr-only">BP Measure Results</h3>
+
+      <table id="ut-measures" class="table table-striped">
+      {{#if hasReadings}}
+        <tbody>
+          <tr>
+            <td class="ut-label">
+              <i class="fa fa-info-circle"></i>
+              <span>Systolic BP</span>
+            </td>
+            <td class="text-right">{{ bpSystolic }}</td>
+          </tr>
+          <tr>
+            <td class="ut-label">
+              <i class="fa fa-info-circle"></i>
+              <span>Diastolic BP</span>
+            </td>
+            <td class="text-right">{{ bpDiastolic }}</td>
+          </tr>
+          <tr>
+            <td class="ut-label">
+              <i class="fa fa-info-circle"></i>
+              <span>Heart Rate</span>
+            </td>
+            <td class="text-right">{{ heartRate }}</td>
+          </tr>
+          <tr>
+            <td class="ut-label">
+              <i class="fa fa-info-circle"></i>
+              <span>Arrhythmia</span>
+            </td>
+            <td class="text-right">{{ arrhythmia }}</td>
+          </tr>
+        </tbody>
+      {{/if}}    
+      </table>
     </div>
-    <table id="ut-measures" class="table table-striped">
-    {{#if hasReadings}}
-      <tbody>
-        <tr>
-          <td class="ut-label">Systolic BP</td>
-          <td class="text-right">{{ bpSystolic }}</td>
-        </tr>
-        <tr>
-          <td class="ut-label">Diastolic BP</td>
-          <td class="text-right">{{ bpDiastolic }}</td>
-        </tr>
-        <tr>
-          <td class="ut-label">Heart Rate</td>
-          <td class="text-right">{{ heartRate }}</td>
-        </tr>
-        <tr>
-          <td class="ut-label">Arrhythmia</td>
-          <td class="text-right">{{ arrhythmia }}</td>
-        </tr>
-      </tbody>
-    {{/if}}    
-    </table>
-  </div>
+  </section>
+</template>
+
+
+<template name="medLingo">
+  <section id="med-lingo">
+    <h2>Learning the Med-Vocab</h2>
+    <a class="close {{ lrClass }}" href="#"><i class="fa fa-times-circle"></i></a>
+    <dl>
+      <dt>Systolic Blood Pressure</dt>
+      <dd>
+        <span>Blood pressure when the heart contracts (beats)</span>
+        <a class="read-more" href="#">more</a>
+        <span>highest value (in mmHg) of recorded BP and maximum pressure at which the arterial system operates; occurs at the point of heart muscle contraction</span>
+        <a class="show-less" href="#">less</a>
+      </dd>
+      <dt>Diastolic Blood Pressure</dt>
+      <dd>
+        <span>Blood pressure when the heart is resting between beats.</span>
+        <a class="read-more" href="#">more</a>
+        <span>lowest value (in mmHg) of recorded BP and minimum pressure at which the arterial system operates; occurs at the point of heart muscle relaxation</span>
+        <a class="show-less" href="#">less</a>
+      </dd>
+      <dt>Heart Rate</dt>
+      <dd>
+        <span>The number of heartbeats per unit of time, usually expressed as beats per minute</span>
+         <a class="read-more" href="#">more</a>
+        <span>The rate at which the heart contracts; greater than 100 beats per minute is labelled tachycardia, less than 60 beats per minute is labelled bradycardia. Resting bradycardia in trained athletes is normal.</span>
+        <a class="show-less" href="#">less</a>
+      </dd>
+      <dt>Arrhythmia</dt>
+      <dd>
+        <span>An irregularity in the force or rhythm of the heartbeat</span>
+        <a class="read-more" href="#">more</a>
+        <span><br><b>nonphasic arrhythmia:</b> a form of sinus arrhythmia in which the irregularity is not linked to the phases of respiration.<br><b>sinus arrhythmia:</b> the physiologic cyclic variation in heart rate related to vagal impulses to the sinoatrial node; it is common, particularly in children, and is not abnormal.</span>
+        <a class="show-less" href="#">less</a>
+      </dd>
+    </dl>
+    <div>Source: <a href="http://medical-dictionary.thefreedictionary.com">http://medical-dictionary.thefreedictionary.com</a>
+    </div>
+    <a class="close {{ lrClass }}" href="#"><i class="fa fa-times-circle"></i></a>
+  </section>
 </template>

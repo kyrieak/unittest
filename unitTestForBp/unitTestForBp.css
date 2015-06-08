@@ -14,12 +14,8 @@ h1 {
   font-size: 2em;
 }
 
-h2 {
-  font-size: 1.5em;
-}
-
-h3 {
-  font-size: 1.2em;
+h2, h3 {
+  font-size: 1.6em;
 }
 
 button {
@@ -43,12 +39,38 @@ button:active {
   display: auto !important;
 }
 
-.ut-btn i {
+.ut-btn i,
+.close i {
   color: #f7a167;
 }
 
+.close {
+  opacity: 1.0;
+}
+
+dd a,
+dd a:visited {
+  color: #f7a167;
+}
+
+.read-more + span,
+.show-less {
+  display: none;
+}
+
+section#med-lingo {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 2.8em;
+  padding: 1em;
+  background-color: #fffcfb;
+  overflow-y: scroll;
+  z-index: 12;
+}
+
 #device-list {
-  border: 5px solid #f0d98c;
+  border: 5px solid #fcddc8;
   border-width: 5px 0;
   padding: 0;
   width: 100%;
@@ -60,6 +82,10 @@ button:active {
   margin: 0;
   width: 100%;
   background-color: #faffff;  
+}
+
+.dv-name {
+  font-size: 1.2em;
 }
 
 tr:nth-child(even) {
@@ -134,8 +160,12 @@ i.hand-icon-r.active {
   background-image: url("/hand-r-100-dark.png");
 }
 
-#ut-wrapper {
-  width: 100%;
+*::-webkit-scrollbar {
+  display: none !important;
+}
+
+main {
+  margin-bottom: 2.8em;
 }
 
 #statusMsg {
@@ -144,6 +174,7 @@ i.hand-icon-r.active {
 }
 
 #measurements {
+  display: none;
   margin-top: 0.5em;
   margin-bottom: 1em;
   margin-right: -5px;
@@ -156,7 +187,6 @@ i.hand-icon-r.active {
 #bp-container {
   position: relative;
   margin: 0 auto;
-  width: 80%;
   text-align: center;
 }
 

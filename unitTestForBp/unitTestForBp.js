@@ -5,9 +5,19 @@ if (Meteor.isClient) {
                  'searching'  : 1,
                  'searchDone' : 2,
                  'measuring'  : 3,
-                 'measureDone': 4 };
+                 'measureDone': 4,
+                 'failed'     : 5 };
 
   var devices = [];
+
+  Template.registerHelper('lrClass', function() {
+    return ((Session.get('lr-mode') === 'L') ? '': 'pull-right');
+  });
+
+  function setStatusWithMsg(status, msg) {
+    Session.set('status', status);
+    Session.set('status-msg', msg);
+  }
 
   Template.body.rendered = function() {
     Session.set('status', status.ready);
@@ -40,9 +50,9 @@ if (Meteor.isClient) {
     statusMsg: function() {
       return Session.get('status-msg');
     },
-    lrClass: function() {
-      return ((Session.get('lr-mode') === 'L') ? '': 'pull-right');
-    },
+    // lrClass: function() {
+    //   return ((Session.get('lr-mode') === 'L') ? '': 'pull-right');
+    // },
     selectDevice: function() {
       return Session.get('select-device');
     },
@@ -84,16 +94,17 @@ if (Meteor.isClient) {
 
   Template.measure.rendered = function() {
     var bpContainer = $.find("#bp-container");
-    var w = $(bpContainer).width()
+    var w = $(window).width() * 0.8
 
+    $(bpContainer).width(w);
     $(bpContainer).height(w);
 
     bpDisplayScale = w / 16.737;
   };
 
   Template.measure.helpers({
-    lrClass: function() {
-      return ((Session.get('lr-mode') === 'L') ? '': 'pull-right');
+    measureInProgress: function() {
+      return (Session.get('status') === status.measuring);
     },
     uiMeasureClass: function() {
       var _status = Session.get('status');
@@ -130,7 +141,6 @@ if (Meteor.isClient) {
         if (readings.pressure) {
           return readings.pressure;
         } else {
-          Session.set('status-msg', 'Done!');
           return readings.highpressure + "/" + readings.lowpressure;
         }
       } else {
@@ -159,9 +169,8 @@ if (Meteor.isClient) {
     },
     arrhythmia: function() {
       var a = Session.get('measurements').arrhythmia;
-      console.log(a);
       
-      return (a ? a : "");
+      return (a ? "yes" : "no");
     },
     labelForKey: function(key) {
       switch(key) {
@@ -182,16 +191,16 @@ if (Meteor.isClient) {
 
   Template.body.events({
     'click .nav-home' : function() {
-      Session.set('measurements', undefined);
-      Session.set('status-msg', undefined);
-      Session.set('status', 'ready');
+      setStatusWithMsg(status.ready, null);
+
       Session.set('pageContent', 'home');
     },
 
     'click .nav-measure' : function() {
-      Session.set('measurements', undefined);
-      Session.set('status-msg', undefined);
-      Session.set('status', 'ready');
+      Session.set('measurements', null);
+
+      setStatusWithMsg(status.ready, null);
+
       Session.set('pageContent', 'measure');
     }
   });
@@ -231,12 +240,10 @@ if (Meteor.isClient) {
       Session.set('select-device', this);
     },
     
-    'click .search' : function () {
+    'click .search' : function() {
       console.log('search...');
       var success = function(message){
         console.log(message);
-
-        Session.set('pageContent', 'home');
 
         var parsedMsg = JSON.parse(message);
         var info = { 'address': parsedMsg['address'],
@@ -244,33 +251,32 @@ if (Meteor.isClient) {
 
         devices.push(info);
         Session.set('devices', devices);
-        Session.set('status-msg', parsedMsg["msg"]);
-        Session.set('status', status.searchDone);
+        setStatusWithMsg(status.searchDone, parsedMsg["msg"]);
       }
 
-      var failure = function(message){
+      var failure = function(message) {
         console.log(message);
-        Session.set('status-msg', message);
+
+        setStatusWithMsg(status.failed, message);
       }
-      Session.set('status-msg', "searching...");
-      Session.set('status', status.searching);
+      setStatusWithMsg(status.searching, "searching...");
+
       BpManagerCordova.search("", success, failure, "test");
     },
 
-    'click .stopsearch' : function () {
+    'click .stopsearch' : function() {
       console.log('stopsearch!');
 
       var success = function(message){
         console.log(message);
 
-        Session.set('pageContent', 'home');
-        Session.set('status-msg', message);
-        Session.set('status', status.ready);
+        setStatusWithMsg(status.ready, message);
       }
 
       var failure = function(message){
         console.log(message);
-        Session.set('status-msg', message);
+
+        setStatusWithMsg(status.failed, message);
       }
       BpManagerCordova.stopMeasure("8CDE52143F1E", success, failure);
 
@@ -280,8 +286,7 @@ if (Meteor.isClient) {
   Template.measure.events({    
     'click .startmeasure' : function () {
       console.log('start!');
-      Session.set('pageContent', 'measure');
-      Session.set('status-msg', null);
+      $('#measurements').show();
       Session.set('status', status.measuring);
 
       var success = function(message){
@@ -319,7 +324,7 @@ if (Meteor.isClient) {
       var failure = function(message){
         console.log(message);
 
-        Session.set('status-msg', message);
+        setStatusWithMsg(status.failed, message);
       }
       BpManagerCordova.startMeasure("8CDE52143F1E", success, failure, "test");
     },
@@ -329,7 +334,6 @@ if (Meteor.isClient) {
       var success = function(message){
         console.log(message);
 
-        Session.set('pageContent', 'measure');
         Session.set('status-msg', message);
         Session.set('status', status.ready);
       }
@@ -337,12 +341,37 @@ if (Meteor.isClient) {
       var failure = function(message){
         console.log(message);
 
-        Session.set('status-msg', message);
+        setStatusWithMsg(status.failed, message);
       }
       BpManagerCordova.stopMeasure("8CDE52143F1E", success, failure);
 
     },
 
+    'click .fa-info-circle' : function() {
+      $('#med-lingo').transition('fade up', 500);
+    }
+  });
+
+
+  Template.medLingo.events({
+    'click .close' : function () {
+      $('#med-lingo').transition('fade up', 500);
+    },
+
+    'click .read-more' : function (event) {
+      $(event.target).next().transition('slide down', 300);
+      $(event.target).siblings('.show-less').show();
+      $(event.target).hide();
+    },
+
+    'click .show-less' : function (event) {
+      $(event.target).prev().transition('slide down', 300);
+      $(event.target).siblings('.read-more').show();
+      $(event.target).hide();
+    }
+  });
+
+  Template.body.events({
     'click .enableOffline' : function () {
       console.log('enableOffline!');
       var success = function(message){
@@ -433,6 +462,7 @@ if (Meteor.isClient) {
 
     }
   });
+
 }
 
 if (Meteor.isServer) {
